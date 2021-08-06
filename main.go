@@ -2,19 +2,15 @@ package main
 
 import (
 	"log"
+	"net/http"
 
-	"github.com/jesperkha/ImageMasker/img"
+	"github.com/jesperkha/ImageMasker/client"
 )
 
 func main() {
-	src, err := img.LoadImage("./image.png")
-	if err != nil {
-		log.Fatal(err)
-	}
+	http.HandleFunc("/", client.HandleRequest)
+	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("./client/js/"))))
 
-	mask := img.GetMask(src.Bounds(), []img.Shape{})
-	err = img.WriteImage("new.png", img.GetMaskedImage(src, mask))
-	if err != nil {
-		log.Fatal(err)
-	}
+	log.Print("Open on port 3000")
+	log.Fatal(http.ListenAndServe(":3000", nil))
 }
