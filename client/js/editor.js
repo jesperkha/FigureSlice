@@ -1,77 +1,115 @@
-let selected = null;
-
+const visualizer = document.querySelector(".visualizer");
 const ctxMenu = document.querySelector(".context-menu");
 const editor = document.getElementById("editor");
 
+const minSize = 50;
+const shapes = ["rectangle", "circle"];
+const RECTANGLE = 0;
+const CIRCLE = 1;
+
+let shapeType = CIRCLE;
+let selected = null;
+let mouseDown = false;
+let startPos = [];
+let visualizerWidth = 0;
+let visualizerHeight = 0;
+
+// Todo make setting div valules a function
+// fix bug where circle gets too big
+
+// dont display ctx menu inside editor
 editor.addEventListener("contextmenu", e => e.preventDefault());
+
+// when ctx menu is open it should be closed as normal when clicking
 editor.addEventListener("click", e => {
 	if (e.target.offsetParent !== ctxMenu) {
 		ctxMenu.style.display = "none";
 	}
 });
 
+// setup for new visual rect
+editor.addEventListener("mousedown", e => {
+	mouseDown = true;
+	startPos = [e.clientX, e.clientY];
+	visualizer.style.display = "block";
+
+	visualizer.style.left = e.clientX + "px";
+	visualizer.style.top = e.clientY + "px";
+	visualizer.style.width = "0px";
+	visualizer.style.height = "0px";
+	visualizerWidth = 0;
+	visualizerHeight = 0;
+
+	if (shapeType == RECTANGLE) {
+		visualizer.style.borderRadius = "0%";
+	}
+
+	if (shapeType == CIRCLE) {
+		visualizer.style.borderRadius = "50%";
+	}
+});
+
+// show rect and change color based on width/height
+editor.addEventListener("mousemove", e => {
+	if (mouseDown) {
+		const w = e.clientX - startPos[0];
+		const h = e.clientY - startPos[1];
+		if (visualizerWidth < minSize || visualizerHeight < minSize) visualizer.style.borderColor = "red";
+		else visualizer.style.borderColor = "gray";
+
+		if (shapeType == RECTANGLE) {
+			visualizer.style.width = w + "px";
+			visualizer.style.height = h + "px";
+			visualizerWidth = w;
+			visualizerHeight = h;
+		}
+
+		if (shapeType == CIRCLE) {
+			visualizer.style.width = w + "px";
+			visualizer.style.height = w + "px";
+			visualizerWidth = w;
+			visualizerHeight = w;
+		}
+	}
+});
+
+// if mouse is outside editor it should still halt shape drawing
+document.addEventListener("mouseup", e => {
+	if (mouseDown) {
+		mouseDown = false;
+		visualizer.style.display = "none";
+
+		// Create new rectangle
+		if (visualizerWidth > 50 && visualizerHeight > 50) {
+			const div = document.createElement("div");
+			div.classList.add(shapes[shapeType]);
+			editor.appendChild(div);
+
+			div.style.left = startPos[0] + "px";
+			div.style.top = startPos[1] + "px";
+			div.style.width = visualizer.style.width;
+			div.style.height = visualizer.style.height;
+
+			div.addEventListener("contextmenu", e => {
+				e.preventDefault();
+				selected = div;
+				ctxMenu.style.display = "flex";
+				ctxMenu.style.left = `${e.clientX}px`;
+				ctxMenu.style.top = `${e.clientY}px`;
+			});
+		}
+	}
+});
+
+// ctx menu methods
 function removeShape() {
 	if (selected) {
-		editor.removeChild(selected.div);
+		editor.removeChild(selected);
 		ctxMenu.style.display = "none";
 		selected = null;
 	}
 }
 
-function resizeShapeX(e) {
-	selected.w = e.value * 10 + 50;
-	selected.div.style.width = `${selected.w}px`;
+function changeOpacity(e) {
+	selected.style.opacity = e.value / 100;
 }
-
-function resizeShapeY(e) {
-	selected.h = e.value * 10 + 50;
-	selected.div.style.height = `${selected.h}px`;
-}
-
-class Shape {
-	constructor() {
-		this.selected = false;
-		this.grabOffset = [0, 0];
-
-		this.div = document.createElement("div");
-		this.div.classList.add("rectangle");
-		editor.appendChild(this.div);
-
-		this.div.addEventListener("mousedown", e => {
-			if (e.button == 0) {
-				this.selected = true;
-				selected = this;
-				this.grabOffset = [e.clientX - this.x, e.clientY - this.y];
-			}
-		});
-
-		this.div.addEventListener("mouseup", e => (this.selected = false));
-		this.div.addEventListener("mouseleave", e => (this.selected = false));
-
-		this.div.addEventListener("contextmenu", e => {
-			e.preventDefault();
-			selected = this;
-			ctxMenu.style.display = "flex";
-			ctxMenu.style.left = `${e.clientX}px`;
-			ctxMenu.style.top = `${e.clientY}px`;
-		});
-
-		this.div.addEventListener("mousemove", e => {
-			if (this.selected) {
-				this.x = e.clientX - this.grabOffset[0];
-				this.y = e.clientY - this.grabOffset[1];
-
-				this.div.style.left = `${this.x}px`;
-				this.div.style.top = `${this.y}px`;
-			}
-		});
-
-		this.x = 0;
-		this.y = 0;
-		this.w = 550;
-		this.h = 550;
-	}
-}
-
-new Shape();
-new Shape();

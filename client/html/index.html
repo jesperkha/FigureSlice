@@ -18,15 +18,12 @@
 		<button onclick="uploadImage();">Send</button> -->
 
 		<div id="editor" class="editor">
+			<div class="visualizer"></div>
 			<div class="context-menu">
 				<p class="editor-remove" onclick="removeShape();">Remove</p>
 				<div class="editor-sliders">
-					<label for="size">Size:</label>
-					<input name="size" type="range" oninput="resizeShapeX(this);" />
-					<input name="size" type="range" oninput="resizeShapeY(this);" />
-					<br />
 					<label for="opacity">Opcaity:</label>
-					<input name="opacity" type="range" onchange="changeOpacity();" />
+					<input name="opacity" type="range" oninput="changeOpacity(this);" />
 				</div>
 			</div>
 		</div>

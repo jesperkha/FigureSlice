@@ -10,15 +10,18 @@
 	border: 1px solid black;
 	margin: auto;
 	overflow: hidden;
+	cursor: crosshair;
 }
 
 .rectangle {
-	position: relative;
-	width: 550px;
-	height: 550px;
-
+	position: absolute;
 	background-color: aqua;
-	cursor: move;
+}
+
+.circle {
+	position: absolute;
+	background-color: aqua;
+	border-radius: 50%;
 }
 
 .rectangle .dot {
@@ -63,4 +66,10 @@
 .context-menu p:hover {
 	background-color: rgba(255, 255, 255, 0.1);
 	cursor: pointer;
+}
+
+.visualizer {
+	position: absolute;
+	border: 3px solid grey;
+	display: none;
 }
