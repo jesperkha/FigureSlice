@@ -1,3 +1,9 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
 .editor {
 	width: 60%;
 	height: 20vw;
@@ -8,8 +14,8 @@
 
 .rectangle {
 	position: relative;
-	width: 300px;
-	height: 150px;
+	width: 550px;
+	height: 550px;
 
 	background-color: aqua;
 	cursor: move;
@@ -24,5 +30,37 @@
 	border-radius: 50%;
 	background-color: lightskyblue;
 	border: 2px solid black;
+	cursor: pointer;
+}
+
+.context-menu {
+	left: 0;
+	top: 0;
+
+	font-family: "Poppins", sans-serif;
+	position: absolute;
+	background-color: #1b1d29;
+	color: white;
+	font-size: 0.9em;
+	display: flex;
+	flex-direction: column;
+	display: none;
+	z-index: 100;
+}
+
+.editor-remove,
+.editor-sliders {
+	width: 100%;
+	padding: 1em;
+	display: flex;
+	flex-direction: column;
+}
+
+.editor-sliders input {
+	padding: 0.5em;
+}
+
+.context-menu p:hover {
+	background-color: rgba(255, 255, 255, 0.1);
 	cursor: pointer;
 }

@@ -1,11 +1,32 @@
-let shapes = [];
 let selected = null;
 
+const ctxMenu = document.querySelector(".context-menu");
 const editor = document.getElementById("editor");
-const ex = editor.offsetLeft;
-const ey = editor.offsetTop;
-const ew = editor.offsetWidth;
-const eh = editor.offsetHeight;
+
+editor.addEventListener("contextmenu", e => e.preventDefault());
+editor.addEventListener("click", e => {
+	if (e.target.offsetParent !== ctxMenu) {
+		ctxMenu.style.display = "none";
+	}
+});
+
+function removeShape() {
+	if (selected) {
+		editor.removeChild(selected.div);
+		ctxMenu.style.display = "none";
+		selected = null;
+	}
+}
+
+function resizeShapeX(e) {
+	selected.w = e.value * 10 + 50;
+	selected.div.style.width = `${selected.w}px`;
+}
+
+function resizeShapeY(e) {
+	selected.h = e.value * 10 + 50;
+	selected.div.style.height = `${selected.h}px`;
+}
 
 class Shape {
 	constructor() {
@@ -17,19 +38,22 @@ class Shape {
 		editor.appendChild(this.div);
 
 		this.div.addEventListener("mousedown", e => {
-			this.selected = true;
+			if (e.button == 0) {
+				this.selected = true;
+				selected = this;
+				this.grabOffset = [e.clientX - this.x, e.clientY - this.y];
+			}
+		});
+
+		this.div.addEventListener("mouseup", e => (this.selected = false));
+		this.div.addEventListener("mouseleave", e => (this.selected = false));
+
+		this.div.addEventListener("contextmenu", e => {
+			e.preventDefault();
 			selected = this;
-			this.grabOffset = [e.clientX - this.x, e.clientY - this.y];
-		});
-
-		this.div.addEventListener("mouseup", e => {
-			this.selected = false;
-			selected = null;
-		});
-
-		this.div.addEventListener("mouseleave", e => {
-			this.selected = false;
-			selected = null;
+			ctxMenu.style.display = "flex";
+			ctxMenu.style.left = `${e.clientX}px`;
+			ctxMenu.style.top = `${e.clientY}px`;
 		});
 
 		this.div.addEventListener("mousemove", e => {
@@ -44,9 +68,10 @@ class Shape {
 
 		this.x = 0;
 		this.y = 0;
-		this.w = 300;
-		this.h = 150;
+		this.w = 550;
+		this.h = 550;
 	}
 }
 
+new Shape();
 new Shape();

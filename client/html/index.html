@@ -4,16 +4,31 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<script defer src="/js/request.js"></script>
-		<script defer src="/js/editor.js"></script>
-		<link rel="stylesheet" href="/css/editor.css" />
+		<script defer src="../js/request.js"></script>
+		<script defer src="../js/editor.js"></script>
+		<link rel="stylesheet" href="../css/editor.css" />
 		<title>Document</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet" />
 	</head>
 	<body>
 		<!-- <img id="img" src="" alt="" />
 		<input type="file" id="img" accept="image/*" />
 		<button onclick="uploadImage();">Send</button> -->
 
-		<div id="editor" class="editor"></div>
+		<div id="editor" class="editor">
+			<div class="context-menu">
+				<p class="editor-remove" onclick="removeShape();">Remove</p>
+				<div class="editor-sliders">
+					<label for="size">Size:</label>
+					<input name="size" type="range" oninput="resizeShapeX(this);" />
+					<input name="size" type="range" oninput="resizeShapeY(this);" />
+					<br />
+					<label for="opacity">Opcaity:</label>
+					<input name="opacity" type="range" onchange="changeOpacity();" />
+				</div>
+			</div>
+		</div>
 	</body>
 </html>
