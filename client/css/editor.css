@@ -7,20 +7,22 @@
 .editor {
 	width: 60%;
 	height: 20vw;
-	border: 1px solid black;
 	margin: auto;
 	overflow: hidden;
 	cursor: crosshair;
+	background: rgba(255, 255, 255, 0.1);
+	background-position: center;
+	background-size: cover;
+	opacity: 70%;
 }
 
-.rectangle {
+.rectangle,
+.circle {
 	position: absolute;
-	background-color: aqua;
+	background-color: rgba(230, 230, 255, 0.7);
 }
 
 .circle {
-	position: absolute;
-	background-color: aqua;
 	border-radius: 50%;
 }
 
@@ -37,9 +39,6 @@
 }
 
 .context-menu {
-	left: 0;
-	top: 0;
-
 	font-family: "Poppins", sans-serif;
 	position: absolute;
 	background-color: #1b1d29;

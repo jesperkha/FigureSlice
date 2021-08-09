@@ -1,94 +1,104 @@
 const visualizer = document.querySelector(".visualizer");
 const ctxMenu = document.querySelector(".context-menu");
 const editor = document.getElementById("editor");
+const editorOffsetX = editor.offsetLeft;
+const editorOffsetY = editor.offsetTop;
 
-const minSize = 50;
-const shapes = ["rectangle", "circle"];
 const RECTANGLE = 0;
 const CIRCLE = 1;
 
+const minSize = 20;
+const shapes = ["rectangle", "circle"];
+const shapeConfig = {
+	rectangle: div => {
+		div.style.borderRadius = "0%";
+	},
+	circle: div => {
+		div.style.borderRadius = "50%";
+	},
+};
+
+let listShapes = [];
+let vSize = [0, 0];
 let shapeType = CIRCLE;
 let selected = null;
 let mouseDown = false;
 let startPos = [];
-let visualizerWidth = 0;
-let visualizerHeight = 0;
 
-// Todo make setting div valules a function
-// fix bug where circle gets too big
+// Shorthand for setting style values
+function setDiv(div, w, h, x = null, y = null) {
+	div.style.width = w + "px";
+	div.style.height = h + "px";
 
-// dont display ctx menu inside editor
+	if (x && y) {
+		div.style.left = x + "px";
+		div.style.top = y + "px";
+	}
+}
+
+// Toggle mouse events and visibility of outline
+function toggleDraw(state) {
+	mouseDown = state;
+	visualizer.style.display = state ? "block" : "none";
+}
+
+// Returns new size for outline on mousemove
+function vgetNewSize(x, y, shape) {
+	let w = x - startPos[0];
+	let h = y - startPos[1];
+	if (shape == CIRCLE) {
+		const s = Math.max(w, h);
+		(w = s), (h = s);
+	}
+
+	return [w, h];
+}
+
+// Context menu in editor is reserved for ctxMenu
 editor.addEventListener("contextmenu", e => e.preventDefault());
 
-// when ctx menu is open it should be closed as normal when clicking
+// Close ctx menu
 editor.addEventListener("click", e => {
 	if (e.target.offsetParent !== ctxMenu) {
 		ctxMenu.style.display = "none";
 	}
 });
 
-// setup for new visual rect
+// Resets drawing and the border rect/circle
 editor.addEventListener("mousedown", e => {
-	mouseDown = true;
+	toggleDraw(true);
 	startPos = [e.clientX, e.clientY];
-	visualizer.style.display = "block";
-
-	visualizer.style.left = e.clientX + "px";
-	visualizer.style.top = e.clientY + "px";
-	visualizer.style.width = "0px";
-	visualizer.style.height = "0px";
-	visualizerWidth = 0;
-	visualizerHeight = 0;
-
-	if (shapeType == RECTANGLE) {
-		visualizer.style.borderRadius = "0%";
-	}
-
-	if (shapeType == CIRCLE) {
-		visualizer.style.borderRadius = "50%";
-	}
+	setDiv(visualizer, 0, 0, e.clientX, e.clientY);
+	shapeConfig[shapes[shapeType]](visualizer);
+	vSize = [0, 0];
 });
 
-// show rect and change color based on width/height
+// Resize shape outline
 editor.addEventListener("mousemove", e => {
 	if (mouseDown) {
-		const w = e.clientX - startPos[0];
-		const h = e.clientY - startPos[1];
-		if (visualizerWidth < minSize || visualizerHeight < minSize) visualizer.style.borderColor = "red";
+		if (vSize[0] < minSize || vSize[1] < minSize) visualizer.style.borderColor = "red";
 		else visualizer.style.borderColor = "gray";
 
-		if (shapeType == RECTANGLE) {
-			visualizer.style.width = w + "px";
-			visualizer.style.height = h + "px";
-			visualizerWidth = w;
-			visualizerHeight = h;
-		}
-
-		if (shapeType == CIRCLE) {
-			visualizer.style.width = w + "px";
-			visualizer.style.height = w + "px";
-			visualizerWidth = w;
-			visualizerHeight = w;
-		}
+		const [w, h] = vgetNewSize(e.clientX, e.clientY, shapeType);
+		setDiv(visualizer, w, h);
+		vSize = [w, h];
 	}
 });
 
-// if mouse is outside editor it should still halt shape drawing
+// Reset / create new shape at outline
 document.addEventListener("mouseup", e => {
 	if (mouseDown) {
-		mouseDown = false;
-		visualizer.style.display = "none";
+		toggleDraw(false);
 
-		// Create new rectangle
-		if (visualizerWidth > 50 && visualizerHeight > 50) {
+		// Create new shape
+		if (vSize[0] > minSize && vSize[1] > minSize) {
 			const div = document.createElement("div");
 			div.classList.add(shapes[shapeType]);
+			div.dataset.type = shapeType;
+			div.style.opacity = 1;
+			setDiv(div, vSize[0], vSize[1], startPos[0], startPos[1]);
 			editor.appendChild(div);
-
-			div.style.left = startPos[0] + "px";
-			div.style.top = startPos[1] + "px";
-			div.style.width = visualizer.style.width;
-			div.style.height = visualizer.style.height;
+			listShapes.push(div);
 
 			div.addEventListener("contextmenu", e => {
 				e.preventDefault();
@@ -101,7 +111,7 @@ document.addEventListener("mouseup", e => {
 	}
 });
 
-// ctx menu methods
+// From ctxMenu
 function removeShape() {
 	if (selected) {
 		editor.removeChild(selected);
@@ -110,6 +120,38 @@ function removeShape() {
 	}
 }
 
+// From ctxMenu
 function changeOpacity(e) {
 	selected.style.opacity = e.value / 100;
+}
+
+// Gets all the shapes as array of objects with same key types as Shape struct
+// Called when shape data should be exported
+function GetAllShapeData() {
+	const data = [];
+	const nmap = (n, a, b, x, y) => ((n - a) / (b - a)) * (y - x) + x;
+
+	for (const shape of listShapes) {
+		const t = shape.dataset.type;
+		const X = shape.offsetLeft - editorOffsetX;
+		const Y = shape.offsetTop - editorOffsetY;
+		const w = shape.offsetWidth;
+		const h = shape.offsetHeight;
+		const o = shape.style.opacity;
+
+		data.push({
+			Type: Number(t),
+			Pos: {
+				X,
+				Y,
+			},
+			Size: {
+				X: w,
+				Y: h,
+			},
+			Opacity: nmap(Number(o), 0, 1, 0, 255),
+		});
+	}
+
+	return data;
 }

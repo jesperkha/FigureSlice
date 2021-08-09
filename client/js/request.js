@@ -1,4 +1,6 @@
-async function uploadImage() {
+// Todo: scale w, h, x, y to actual image size
+
+async function getMaskedImage() {
 	const file = document.querySelector("input[type=file]").files[0];
 	if (!file) return;
 
@@ -9,7 +11,8 @@ async function uploadImage() {
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: reader.result,
+			body: JSON.stringify(GetAllShapeData()),
+			// body: reader.result,
 		};
 
 		const res = await fetch("/image", request);
@@ -27,4 +30,24 @@ async function uploadImage() {
 	};
 
 	reader.readAsArrayBuffer(file);
+}
+
+function getImage() {
+	const file = document.querySelector("input[type=file]").files[0];
+	if (!file) return;
+
+	const reader = new FileReader();
+	reader.onloadend = () => {
+		const editor = document.querySelector(".editor");
+		const img = new Image();
+		img.onload = () => {
+			const ratio = img.width / img.height;
+			editor.style.backgroundImage = `url(${reader.result})`;
+			editor.style.width = 35 * ratio + "vw";
+			editor.style.height = "35vw";
+		};
+		img.src = reader.result;
+	};
+
+	reader.readAsDataURL(file);
 }
