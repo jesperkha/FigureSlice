@@ -1,8 +1,6 @@
 const visualizer = document.querySelector(".visualizer");
 const ctxMenu = document.querySelector(".context-menu");
 const editor = document.getElementById("editor");
-const editorOffsetX = editor.offsetLeft;
-const editorOffsetY = editor.offsetTop;
 
 const RECTANGLE = 0;
 const CIRCLE = 1;
@@ -17,6 +15,13 @@ const shapeConfig = {
 		div.style.borderRadius = "50%";
 	},
 };
+
+const maxHeight = 35; // vw
+
+let ImageWidth = 0;
+let ImageHeight = 0;
+let ImageRatio = 0;
+let ImageURL = "";
 
 let listShapes = [];
 let vSize = [0, 0];
@@ -58,7 +63,7 @@ function vgetNewSize(x, y, shape) {
 editor.addEventListener("contextmenu", e => e.preventDefault());
 
 // Close ctx menu
-editor.addEventListener("click", e => {
+document.addEventListener("click", e => {
 	if (e.target.offsetParent !== ctxMenu) {
 		ctxMenu.style.display = "none";
 	}
@@ -96,6 +101,13 @@ document.addEventListener("mouseup", e => {
 			div.classList.add(shapes[shapeType]);
 			div.dataset.type = shapeType;
 			div.style.opacity = 1;
+
+			const ox = -(startPos[0] - editor.offsetLeft);
+			const oy = -(startPos[1] - editor.offsetTop);
+			div.style.backgroundPosition = `${ox}px ${oy}px`;
+			div.style.backgroundImage = `url(${ImageURL})`;
+			div.style.backgroundSize = maxHeight * ImageRatio + "vw 35vw";
+
 			setDiv(div, vSize[0], vSize[1], startPos[0], startPos[1]);
 			editor.appendChild(div);
 			listShapes.push(div);
@@ -109,6 +121,8 @@ document.addEventListener("mouseup", e => {
 			});
 		}
 	}
+
+	mouseDown = false;
 });
 
 // From ctxMenu
@@ -127,29 +141,31 @@ function changeOpacity(e) {
 
 // Gets all the shapes as array of objects with same key types as Shape struct
 // Called when shape data should be exported
+const nmap = (n, a, b, x, y) => ((n - a) / (b - a)) * (y - x) + x;
 function GetAllShapeData() {
 	const data = [];
-	const nmap = (n, a, b, x, y) => ((n - a) / (b - a)) * (y - x) + x;
+	const scale = editor.offsetWidth / ImageWidth;
 
 	for (const shape of listShapes) {
-		const t = shape.dataset.type;
-		const X = shape.offsetLeft - editorOffsetX;
-		const Y = shape.offsetTop - editorOffsetY;
+		const t = Number(shape.dataset.type);
 		const w = shape.offsetWidth;
 		const h = shape.offsetHeight;
+		const x = shape.offsetLeft - editor.offsetLeft + (t == CIRCLE ? w / 2 : 0);
+		const y = shape.offsetTop - editor.offsetTop + (t == CIRCLE ? h / 2 : 0);
 		const o = shape.style.opacity;
 
 		data.push({
-			Type: Number(t),
+			Type: t,
 			Pos: {
-				X,
-				Y,
+				X: Math.floor(x / scale),
+				Y: Math.floor(y / scale),
 			},
 			Size: {
-				X: w,
-				Y: h,
+				// Width is radius for circles
+				X: Math.floor(w / (t == CIRCLE ? 2 : 1) / scale),
+				Y: Math.floor(h / scale),
 			},
-			Opacity: nmap(Number(o), 0, 1, 0, 255),
+			Opacity: Math.floor(nmap(Number(o), 0, 1, 0, 255)),
 		});
 	}
 

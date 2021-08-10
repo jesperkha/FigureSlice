@@ -5,15 +5,19 @@
 }
 
 .editor {
-	width: 60%;
-	height: 20vw;
+	height: 35vw;
 	margin: auto;
 	overflow: hidden;
 	cursor: crosshair;
 	background: rgba(255, 255, 255, 0.1);
 	background-position: center;
 	background-size: cover;
-	opacity: 70%;
+}
+
+.background {
+	width: 100%;
+	height: 100%;
+	opacity: 30%;
 }
 
 .rectangle,
@@ -24,18 +28,6 @@
 
 .circle {
 	border-radius: 50%;
-}
-
-.rectangle .dot {
-	position: relative;
-	left: calc(100%);
-	top: calc(100%);
-	width: 10px;
-	height: 10px;
-	border-radius: 50%;
-	background-color: lightskyblue;
-	border: 2px solid black;
-	cursor: pointer;
 }
 
 .context-menu {

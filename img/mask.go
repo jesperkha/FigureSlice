@@ -49,7 +49,7 @@ func (m *Mask) drawRect(shape Shape) {
 	draw.Draw(shapeRect, shapeRect.Bounds(), &image.Uniform{col}, image.Pt(0, 0), draw.Over)
 
 	// Draw rect to incomplete mask
-	draw.Draw(m, shape.rect(), shapeRect, point, draw.Over)
+	draw.Draw(m, shapeRect.Bounds(), shapeRect, point, draw.Over)
 }
 
 // Draws circle shape to mask

@@ -32,13 +32,13 @@ func (s *Shape) rect() image.Rectangle {
 
 // Load from filename
 func LoadImage(filename string) (img image.Image, err error) {
-	reader, err := os.Open(filename)
+	file, err := os.Open(filename)
 	if err != nil {
 		return img, err
 	}
-	defer reader.Close()
+	defer file.Close()
 
-	img, _, err = image.Decode(reader)
+	img, _, err = image.Decode(file)
 	return img, err
 }
 
@@ -51,13 +51,13 @@ func BLoadImage(byt []byte) (img image.Image, err error) {
 
 // Write image as file
 func WriteImage(path string, img image.Image) (err error) {
-	writer, err := os.OpenFile(path, os.O_CREATE, os.ModeAppend)
+	file, err := os.OpenFile(path, os.O_WRONLY|os.O_APPEND|os.O_CREATE, os.ModeAppend)
 	if err != nil {
 		return err
 	}
+	defer file.Close()
 
-	err = png.Encode(writer, img)
-	return err
+	return png.Encode(file, img)
 }
 
 // Get encoded image bytes

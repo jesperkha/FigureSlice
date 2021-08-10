@@ -11,8 +11,8 @@ func main() {
 	http.HandleFunc("/", client.HandleRequest)
 
 	var filePrefixes = map[string]string {
-		"/js/": "./client/js/",
-		"/css/": "./client/css/",
+		"/js/": "./website/js/",
+		"/css/": "./website/css/",
 	}
 
 	for key, value := range filePrefixes {
@@ -21,4 +21,24 @@ func main() {
 
 	log.Print("Open on port 3000")
 	log.Fatal(http.ListenAndServe(":3000", nil))
+
+	// i, err := img.LoadImage("./src/test.png")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// mask := img.GetMask(i.Bounds(), []img.Shape{
+	// 	{
+	// 		Type: 0,
+	// 		Pos: img.Vector{X: 0, Y: 0},
+	// 		Size: img.Vector{X: 300, Y: 100},
+	// 		Opacity: 255,
+	// 	},
+	// })
+
+	// newImg := img.GetMaskedImage(i, mask)
+	// err = img.WriteImage("./src/result.png", newImg)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 }
