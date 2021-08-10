@@ -4,26 +4,19 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 		<script defer src="/js/request.js"></script>
 		<script defer src="/js/editor.js"></script>
+
+		<link rel="stylesheet" href="/css/main.css" />
 		<link rel="stylesheet" href="/css/editor.css" />
+
 		<title>Document</title>
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet" />
 	</head>
 	<body>
-		<img id="img" src="" alt="" />
-		<form action="" id="form" onsubmit="return false">
-			<input name="Image" onchange="getImage()" type="file" id="img" accept="image/*" />
-			<input type="submit" onclick="getMaskedImage()" />
-		</form>
-
-		<div id="editor" class="editor">
-			<img src="" alt="" class="background" />
-			<div class="visualizer"></div>
-		</div>
-
 		<!-- context menu -->
 		<div class="context-menu">
 			<p class="editor-remove" onclick="removeShape();">Remove</p>
@@ -31,6 +24,22 @@
 				<label for="opacity">Opcaity:</label>
 				<input name="opacity" type="range" oninput="changeOpacity(this);" />
 			</div>
+		</div>
+
+		<form action="" id="form" class="center" onsubmit="return false">
+			<input name="Image" onchange="getImage()" type="file" id="img" accept="image/*" />
+			<input type="submit" onclick="getMaskedImage()" />
+		</form>
+
+		<div class="editor-container center">
+			<div id="editor" class="editor">
+				<img src="" alt="" class="background" />
+				<div class="visualizer"></div>
+			</div>
+		</div>
+
+		<div class="preview center">
+			<img id="preview" src="" alt="" />
 		</div>
 	</body>
 </html>

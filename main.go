@@ -29,9 +29,9 @@ func main() {
 
 	// mask := img.GetMask(i.Bounds(), []img.Shape{
 	// 	{
-	// 		Type: 0,
-	// 		Pos: img.Vector{X: 0, Y: 0},
-	// 		Size: img.Vector{X: 300, Y: 100},
+	// 		Type:    0,
+	// 		Pos:     img.Vector{X: 50, Y: 50},
+	// 		Size:    img.Vector{X: 200, Y: 100},
 	// 		Opacity: 255,
 	// 	},
 	// })

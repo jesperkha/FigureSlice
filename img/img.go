@@ -27,7 +27,11 @@ type Shape struct {
 
 // Get image rect of shape
 func (s *Shape) rect() image.Rectangle {
-	return image.Rect(s.Pos.X, s.Pos.Y, s.Size.X, s.Size.Y)
+	// x1 y1 is origin
+	// second args are second position but here a width/height is used
+	// therefore the position x2 and y2 needs to be shifted by x1 and y1 to
+	// represent a width/height
+	return image.Rect(s.Pos.X, s.Pos.Y, s.Size.X + s.Pos.X, s.Size.Y + s.Pos.Y)
 }
 
 // Load from filename

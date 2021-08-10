@@ -41,15 +41,9 @@ type Mask struct {
 
 // Draws rect shape to mask
 func (m *Mask) drawRect(shape Shape) {
-	point := image.Point(shape.Pos)
-
-	// Fill rect
-	shapeRect := image.NewRGBA(shape.rect())
+	// Draw uniform rect to mask at shapes point
 	col := color.RGBA{0, 0, 0, uint8(shape.Opacity)}
-	draw.Draw(shapeRect, shapeRect.Bounds(), &image.Uniform{col}, image.Pt(0, 0), draw.Over)
-
-	// Draw rect to incomplete mask
-	draw.Draw(m, shapeRect.Bounds(), shapeRect, point, draw.Over)
+	draw.Draw(m, shape.rect(), &image.Uniform{col}, image.Pt(0, 0), draw.Src)
 }
 
 // Draws circle shape to mask

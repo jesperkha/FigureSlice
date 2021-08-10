@@ -23,7 +23,7 @@ async function getMaskedImage() {
 	const blob = await res.blob();
 	const reader = new FileReader();
 	reader.onloadend = () => {
-		document.getElementById("img").src = reader.result;
+		document.getElementById("preview").setAttribute("src", reader.result);
 	};
 
 	reader.readAsDataURL(blob);
@@ -46,7 +46,9 @@ function getImage() {
 			document.querySelector(".background").src = reader.result;
 			editor.style.width = maxHeight * ImageRatio + "vw";
 			editor.style.height = maxHeight + "vw";
+			editor.style.display = "flex";
 		};
+
 		img.src = reader.result;
 	};
 
