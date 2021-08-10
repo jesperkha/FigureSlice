@@ -36,3 +36,7 @@ body {
 .preview img {
 	max-height: 35vw;
 }
+
+img {
+	user-select: none;
+}

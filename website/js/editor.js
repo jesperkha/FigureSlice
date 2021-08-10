@@ -75,7 +75,7 @@ editor.addEventListener("mousedown", e => {
 	startPos = [e.clientX, e.clientY];
 	setDiv(visualizer, 0, 0, e.clientX, e.clientY);
 	shapeConfig[shapes[shapeType]](visualizer);
-	vSize = [0, 0];
+	vSize = [10, 10];
 });
 
 // Resize shape outline
@@ -94,7 +94,6 @@ editor.addEventListener("mousemove", e => {
 document.addEventListener("mouseup", e => {
 	if (mouseDown) {
 		toggleDraw(false);
-
 		// Create new shape
 		if (vSize[0] > minSize && vSize[1] > minSize) {
 			const div = document.createElement("div");

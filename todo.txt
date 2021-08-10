@@ -1,0 +1,4 @@
+Check for incomplete form
+Fix circle bug where it goes over the edge of editor
+Fix bug where position of visualizer and ctxMenu get offset when scrolling
+Add UI for changing between shapes

@@ -1,5 +1,3 @@
-// Todo add check for incomplete form
-
 async function getMaskedImage() {
 	const formData = new FormData(document.getElementById("form"));
 	formData.append("Shapes", JSON.stringify(GetAllShapeData()));
