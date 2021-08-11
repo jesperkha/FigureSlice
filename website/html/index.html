@@ -5,26 +5,16 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<script defer src="/js/request.js"></script>
+		<script defer src="/js/image.js"></script>
 		<script defer src="/js/editor.js"></script>
+		<script defer src="/js/toolbar.js"></script>
 
 		<link rel="stylesheet" href="/css/main.css" />
 		<link rel="stylesheet" href="/css/editor.css" />
 
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"
-			integrity="sha512-w1Bktzax55ZbjW5Mqjz8+mKz4KqRjEUU35Dpq/ath29yskKqIGwNIHiFNp03m/OiJWDXvdQ1/g6aV+l4PeVO7Q=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-		></script>
-
-		<title>Document</title>
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet" />
+		<title>FigureSlice</title>
 	</head>
 	<body>
-		<!-- context menu -->
 		<div class="context-menu">
 			<p class="editor-remove" onclick="removeShape();">Remove</p>
 			<div class="editor-sliders">
@@ -34,11 +24,16 @@
 		</div>
 
 		<form action="" id="form" class="center" onsubmit="return false">
-			<input name="Image" onchange="getImage()" type="file" id="img" accept="image/*" />
+			<input required name="Image" onchange="loadImage()" type="file" id="img" accept="image/*" />
 			<input type="submit" onclick="getMaskedImage()" />
 		</form>
 
 		<div class="editor-container center">
+			<div class="toolbar">
+				<button onclick="toggleTool(0)">Rectangle</button>
+				<button onclick="toggleTool(1)">Circle</button>
+				<button onclick="clearAll()">Clear All</button>
+			</div>
 			<div id="editor" class="editor">
 				<img src="" alt="" class="background" draggable="false" id="editor-bg" />
 				<div class="visualizer"></div>

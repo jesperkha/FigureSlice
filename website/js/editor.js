@@ -7,6 +7,8 @@ const CIRCLE = 1;
 
 const minSize = 20;
 const shapes = ["rectangle", "circle"];
+
+// Additional styling for the visualizer in editor
 const shapeConfig = {
 	rectangle: div => {
 		div.style.borderRadius = "0%";
@@ -25,7 +27,7 @@ let ImageURL = "";
 
 let listShapes = [];
 let vSize = [0, 0];
-let shapeType = CIRCLE;
+let shapeType = RECTANGLE;
 let selected = null;
 let mouseDown = false;
 let startPos = [];
@@ -45,18 +47,6 @@ function setDiv(div, w, h, x = null, y = null) {
 function toggleDraw(state) {
 	mouseDown = state;
 	visualizer.style.display = state ? "block" : "none";
-}
-
-// Returns new size for outline on mousemove
-function vgetNewSize(x, y, shape) {
-	let w = x - startPos[0];
-	let h = y - startPos[1];
-	if (shape == CIRCLE) {
-		const s = Math.max(w, h);
-		(w = s), (h = s);
-	}
-
-	return [w, h];
 }
 
 // Context menu in editor is reserved for ctxMenu
@@ -84,7 +74,13 @@ editor.addEventListener("mousemove", e => {
 		if (vSize[0] < minSize || vSize[1] < minSize) visualizer.style.borderColor = "red";
 		else visualizer.style.borderColor = "gray";
 
-		const [w, h] = vgetNewSize(e.clientX, e.clientY, shapeType);
+		let w = e.clientX - startPos[0];
+		let h = e.clientY - startPos[1];
+		if (shapeType == CIRCLE) {
+			const s = Math.max(w, h);
+			(w = s), (h = s);
+		}
+
 		setDiv(visualizer, w, h);
 		vSize = [w, h];
 	}
@@ -124,20 +120,6 @@ document.addEventListener("mouseup", e => {
 	mouseDown = false;
 });
 
-// From ctxMenu
-function removeShape() {
-	if (selected) {
-		editor.removeChild(selected);
-		ctxMenu.style.display = "none";
-		selected = null;
-	}
-}
-
-// From ctxMenu
-function changeOpacity(e) {
-	selected.style.opacity = e.value / 100;
-}
-
 // Gets all the shapes as array of objects with same key types as Shape struct
 // Called when shape data should be exported
 const nmap = (n, a, b, x, y) => ((n - a) / (b - a)) * (y - x) + x;
@@ -153,6 +135,7 @@ function GetAllShapeData() {
 		const y = shape.offsetTop - editor.offsetTop + (t == CIRCLE ? h / 2 : 0);
 		const o = shape.style.opacity;
 
+		// All numbers are expected to be integers
 		data.push({
 			Type: t,
 			Pos: {

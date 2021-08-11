@@ -12,7 +12,7 @@ async function getMaskedImage() {
 		body: formData,
 	});
 
-	if (res.status != 200) {
+	if (res.status !== 200) {
 		window.location = "/error/" + res.status;
 		return;
 	}
@@ -27,7 +27,7 @@ async function getMaskedImage() {
 	reader.readAsDataURL(blob);
 }
 
-function getImage() {
+function loadImage() {
 	const file = document.querySelector("input[type=file]").files[0];
 	if (!file) return;
 

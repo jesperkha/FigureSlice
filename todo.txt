@@ -1,4 +1,5 @@
-Check for incomplete form
+✔️ Check for incomplete form
+✔️ Add UI for changing between shapes
 Fix circle bug where it goes over the edge of editor
 Fix bug where position of visualizer and ctxMenu get offset when scrolling
-Add UI for changing between shapes
+Add actual error handling for failed requests

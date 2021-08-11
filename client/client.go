@@ -11,8 +11,6 @@ import (
 	"github.com/jesperkha/ImageMasker/img"
 )
 
-// Todo add error page and handling
-
 type handlerFunc func (res http.ResponseWriter, req *http.Request) (status int, err error)
 
 var routes = map[string]handlerFunc {
