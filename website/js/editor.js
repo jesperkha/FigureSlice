@@ -31,6 +31,12 @@ const shapeConfig = {
 	},
 };
 
+function getMousePos(e) {
+	const x = e.clientX;
+	const y = e.clientY + window.scrollY;
+	return [x, y];
+}
+
 // Shorthand for setting style values
 function setDiv(div, w, h, x = null, y = null) {
 	div.style.width = w + "px";
@@ -61,8 +67,9 @@ document.addEventListener("click", e => {
 // Resets drawing and the border rect/circle
 editor.addEventListener("mousedown", e => {
 	toggleDraw(true);
-	startPos = [e.clientX, e.clientY];
-	setDiv(visualizer, 0, 0, e.clientX, e.clientY);
+	startPos = getMousePos(e);
+	const [x, y] = getMousePos(e);
+	setDiv(visualizer, 0, 0, x, y);
 	shapeConfig[shapes[shapeType]](visualizer);
 	vSize = [10, 10];
 });
@@ -73,8 +80,9 @@ editor.addEventListener("mousemove", e => {
 		if (vSize[0] < minSize || vSize[1] < minSize) visualizer.style.borderColor = "red";
 		else visualizer.style.borderColor = "gray";
 
-		let w = e.clientX - startPos[0];
-		let h = e.clientY - startPos[1];
+		const [x, y] = getMousePos(e);
+		let w = x - startPos[0];
+		let h = y - startPos[1];
 		if (shapeType == CIRCLE) {
 			const s = Math.max(w, h);
 			(w = s), (h = s);
@@ -110,8 +118,9 @@ document.addEventListener("mouseup", e => {
 				e.preventDefault();
 				selected = div;
 				ctxMenu.style.display = "flex";
-				ctxMenu.style.left = `${e.clientX}px`;
-				ctxMenu.style.top = `${e.clientY}px`;
+				const [x, y] = getMousePos(e);
+				ctxMenu.style.left = `${x}px`;
+				ctxMenu.style.top = `${y}px`;
 			});
 		}
 	}
