@@ -1,0 +1,52 @@
+{{ define "editor" }}
+<div class="context-menu">
+	<p class="editor-remove" onclick="removeShape();">Remove</p>
+	<div class="editor-sliders">
+		<label for="opacity">Opcaity:</label>
+		<input name="opacity" type="range" oninput="changeOpacity(this);" />
+	</div>
+	<script>
+		const changeOpacity = e => (selected.style.opacity = e.value / 100);
+		const toggleTool = n => (shapeType = n);
+	</script>
+</div>
+
+<form action="" id="form" class="center" onsubmit="return false">
+	<input required name="Image" onchange="loadImage(); clearAll();" type="file" id="img" accept="image/png" />
+	<input type="submit" onclick="getMaskedImage()" />
+</form>
+
+<div class="editor-container center">
+	<div class="toolbar">
+		<button onclick="toggleTool(0)">Rectangle</button>
+		<button onclick="toggleTool(1)">Circle</button>
+		<button onclick="clearAll()">Clear All</button>
+		<script>
+			function removeShape() {
+				if (selected) {
+					listShapes.splice(listShapes.indexOf(selected), 1);
+					editor.removeChild(selected);
+					ctxMenu.style.display = "none";
+					selected = null;
+				}
+			}
+			function clearAll() {
+				for (const s of listShapes) {
+					editor.removeChild(s);
+				}
+
+				listShapes = [];
+			}
+		</script>
+	</div>
+
+	<div id="editor" class="editor">
+		<img src="" alt="" class="background" draggable="false" id="editor-bg" />
+		<div class="visualizer"></div>
+	</div>
+</div>
+
+<div class="preview center">
+	<img id="preview" src="" alt="" />
+</div>
+{{ end }}

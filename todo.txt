@@ -3,3 +3,4 @@
 Fix circle bug where it goes over the edge of editor
 Fix bug where position of visualizer and ctxMenu get offset when scrolling
 Add actual error handling for failed requests
+Make trimming function for images with lots of whitespace

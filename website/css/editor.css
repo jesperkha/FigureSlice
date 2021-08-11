@@ -19,6 +19,7 @@
 	width: 100%;
 	height: 100%;
 	opacity: 30%;
+	box-shadow: 0 0 2em 0 rgba(0, 0, 0, 1);
 }
 
 .editor,

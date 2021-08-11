@@ -7,17 +7,6 @@ const CIRCLE = 1;
 
 const minSize = 20;
 const shapes = ["rectangle", "circle"];
-
-// Additional styling for the visualizer in editor
-const shapeConfig = {
-	rectangle: div => {
-		div.style.borderRadius = "0%";
-	},
-	circle: div => {
-		div.style.borderRadius = "50%";
-	},
-};
-
 const maxHeight = 35; // vw
 
 let ImageWidth = 0;
@@ -31,6 +20,16 @@ let shapeType = RECTANGLE;
 let selected = null;
 let mouseDown = false;
 let startPos = [];
+
+// Additional styling for the visualizer in editor
+const shapeConfig = {
+	rectangle: div => {
+		div.style.borderRadius = "0%";
+	},
+	circle: div => {
+		div.style.borderRadius = "50%";
+	},
+};
 
 // Shorthand for setting style values
 function setDiv(div, w, h, x = null, y = null) {

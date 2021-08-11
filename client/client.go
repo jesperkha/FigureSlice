@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
+	"text/template"
 
 	"github.com/jesperkha/ImageMasker/img"
 )
@@ -14,24 +16,28 @@ import (
 type handlerFunc func (res http.ResponseWriter, req *http.Request) (status int, err error)
 
 var routes = map[string]handlerFunc {
-	"/image": handleImageRequest,
-	"/error": handleError,
-}
-
-func handleError(res http.ResponseWriter, req *http.Request) (status int, err error) {
-	// Serve error.html
-	return http.StatusOK, nil
+	"image": handleImageRequest,
+	"error": handleError,
 }
 
 func HandleRequest(res http.ResponseWriter, req *http.Request) {
 	path := req.URL.Path
 
 	if path == "/" {
-		http.ServeFile(res, req, "./website/html/index.html")
-	}
+		temps, err := template.ParseGlob("./website/templates/index/*.html")
+		if err != nil {
+			log.Fatal(err)
+		}
 
+		err = temps.ExecuteTemplate(res, "main", "")
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	
+	split := strings.Split(path, "/")
 	for route, handle := range routes {
-		if path == route {
+		if route == split[1] {
 			status, err := handle(res, req)
 			// Debug
 			// Implement actual error handling
@@ -44,6 +50,16 @@ func HandleRequest(res http.ResponseWriter, req *http.Request) {
 			}
 		}
 	}
+}
+
+func handleError(res http.ResponseWriter, req *http.Request) (status int, err error) {
+	errorCode := strings.Split(req.URL.Path, "/")[2]
+	temp, err := template.ParseFiles("./website/templates/error.html")
+	if err != nil {
+		return http.StatusInternalServerError, err
+	}
+	
+	return http.StatusOK, temp.Execute(res, errorCode)
 }
 
 func handleImageRequest(res http.ResponseWriter, req *http.Request) (status int, err error) {

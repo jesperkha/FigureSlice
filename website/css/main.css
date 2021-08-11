@@ -10,6 +10,13 @@ body {
 	align-items: center;
 }
 
+section {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 .center {
 	display: flex;
 	justify-content: center;
