@@ -13,6 +13,10 @@
 
 <form action="" id="form" class="center" onsubmit="return false">
 	<input required name="Image" onchange="loadImage(); clearAll();" type="file" id="img" accept="image/png" />
+	<div class="trim-checkbox">
+		<label for="trimImage">Trim whitespace</label>
+		<input type="checkbox" checked="true" name="trimImage" id="" />
+	</div>
 	<input type="submit" onclick="getMaskedImage()" />
 </form>
 

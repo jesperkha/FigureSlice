@@ -67,6 +67,10 @@ func handleImageRequest(res http.ResponseWriter, req *http.Request) (status int,
 		return http.StatusMethodNotAllowed, nil
 	}
 
+	if strings.Split(req.Header.Get("Content-Type"), ";")[0] != "multipart/form-data" {
+		return http.StatusBadRequest, nil
+	}
+
 	// Handle form data
 	var imgBuffer bytes.Buffer
 	var shapeData []img.Shape
@@ -76,7 +80,7 @@ func handleImageRequest(res http.ResponseWriter, req *http.Request) (status int,
 			return http.StatusInternalServerError, err
 		}
 		
-		err = json.Unmarshal([]byte(req.PostForm.Get("Shapes")), &shapeData)
+		err = json.Unmarshal([]byte(req.PostFormValue("Shapes")), &shapeData)
 		if err != nil {
 			return http.StatusInternalServerError, err
 		}
@@ -89,8 +93,13 @@ func handleImageRequest(res http.ResponseWriter, req *http.Request) (status int,
 	}
 	
 	mask := img.GetMask(rawImage.Bounds(), shapeData)
-	if finalImage, err := img.BWriteImage(img.GetMaskedImage(rawImage, mask)); err == nil {
-		_, err = res.Write(finalImage)
+	finalImage := img.GetMaskedImage(rawImage, mask)
+	if req.PostFormValue("trimImage") == "on" {
+		finalImage = img.TrimWhitespace(finalImage)
+	}
+	
+	if byt, err := img.BWriteImage(finalImage); err == nil {
+		_, err = res.Write(byt)
 		return http.StatusOK, err
 	}
 

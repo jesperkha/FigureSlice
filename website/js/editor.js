@@ -88,6 +88,11 @@ editor.addEventListener("mousemove", e => {
 			(w = s), (h = s);
 		}
 
+		// For circle to not go past border
+		if (startPos[1] + h > editor.offsetTop + editor.offsetHeight) {
+			h = w = editor.offsetTop + editor.offsetHeight - startPos[1];
+		}
+
 		setDiv(visualizer, w, h);
 		vSize = [w, h];
 	}

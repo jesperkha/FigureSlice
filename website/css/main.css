@@ -27,6 +27,7 @@ section {
 	width: 80%;
 	height: 20vh;
 	background-color: rgba(20, 10, 70, 0.2);
+	justify-content: space-around;
 }
 
 .editor-container {
