@@ -10,7 +10,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/jesperkha/ImageMasker/img"
+	"github.com/jesperkha/FigureSlice/img"
 )
 
 type handlerFunc func (res http.ResponseWriter, req *http.Request) (status int, err error)
@@ -18,38 +18,36 @@ type handlerFunc func (res http.ResponseWriter, req *http.Request) (status int, 
 var routes = map[string]handlerFunc {
 	"image": handleImageRequest,
 	"error": handleError,
+
+	"about": func (res http.ResponseWriter, req *http.Request) (status int, err error)  {
+		http.ServeFile(res, req, "./website/templates/about.html")
+		return http.StatusOK, nil
+	},
 }
 
 func HandleRequest(res http.ResponseWriter, req *http.Request) {
 	path := req.URL.Path
 
 	if path == "/" {
-		temps, err := template.ParseGlob("./website/templates/index/*.html")
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		err = temps.ExecuteTemplate(res, "main", "")
-		if err != nil {
-			log.Fatal(err)
-		}
+		temps, _ := template.ParseGlob("./website/templates/index/*.html")
+		temps.ExecuteTemplate(res, "main", "")
+		return
 	}
 	
 	split := strings.Split(path, "/")
 	for route, handle := range routes {
 		if route == split[1] {
 			status, err := handle(res, req)
-			// Debug
-			// Implement actual error handling
-			if err != nil {
+			if err != nil || status != http.StatusOK {
 				log.Fatal(err)
-			}
-
-			if status != http.StatusOK {
 				http.Redirect(res, req, fmt.Sprintf("/error/%d", status), status)
 			}
+
+			return
 		}
 	}
+
+	http.Redirect(res, req, "/error/404", http.StatusNotFound)
 }
 
 func handleError(res http.ResponseWriter, req *http.Request) (status int, err error) {

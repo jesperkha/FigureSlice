@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/jesperkha/ImageMasker/client"
+	"github.com/jesperkha/FigureSlice/client"
 )
 
 func main() {

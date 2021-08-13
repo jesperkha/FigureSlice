@@ -15,13 +15,9 @@
 	display: none;
 }
 
-.file-input {
-	padding: 0.7em 1.2em;
-	background-color: var(--primary);
-	color: white;
-	border-radius: 2em;
-	cursor: pointer;
-	margin: 2em;
+#filename {
+	text-align: center;
+	margin-left: 2em;
 }
 
 /* Step 2 */
@@ -120,18 +116,6 @@
 	justify-content: flex-start;
 }
 
-.submit-image button {
-	outline: none;
-	border: none;
-	padding: 0.7em 1.2em;
-	background-color: var(--primary);
-	color: white;
-	border-radius: 2em;
-	cursor: pointer;
-	margin: 2em;
-	font-family: "Rubik", sans-serif;
-}
-
 .preview {
 	background-color: #f7f7f7;
 	width: 80%;
@@ -142,4 +126,20 @@
 .preview img {
 	max-width: 90%;
 	max-height: 90%;
+}
+
+input[type="checkbox"] {
+	margin: 1em;
+}
+
+/* Footer */
+
+.footer {
+	border-top: 2px solid black;
+	display: flex;
+	justify-content: center;
+}
+
+.footer * {
+	margin: 2em;
 }

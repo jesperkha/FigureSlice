@@ -27,9 +27,16 @@ img {
 	user-select: none;
 }
 
-p {
+p,
+a {
+	color: black;
 	font-size: 0.9em;
 	font-family: "Rubik", sans-serif;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
 }
 
 h1 {
@@ -52,9 +59,26 @@ h2 {
 	box-shadow: 0 0 2em 0 rgba(0, 0, 0, 0.3);
 }
 
+.button {
+	outline: none;
+	border: none;
+	padding: 0.7em 1.2em;
+	background-color: var(--primary);
+	color: white;
+	border-radius: 2em;
+	cursor: pointer;
+	margin: 2em;
+	font-family: "Rubik", sans-serif;
+	transition: all 0.1s ease;
+}
+
+.button:hover {
+	box-shadow: 0 0 2em 0 rgba(178, 81, 255, 0.5);
+}
+
 .step {
 	width: 100%;
-	margin-bottom: 15vh;
+	margin-bottom: 10vh;
 }
 
 .step-line {

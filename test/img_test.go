@@ -3,7 +3,7 @@ package tests
 import (
 	"testing"
 
-	"github.com/jesperkha/ImageMasker/img"
+	"github.com/jesperkha/FigureSlice/img"
 )
 
 // Generates 3 new images with each draw function in img/draw.go

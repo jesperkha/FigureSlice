@@ -37,6 +37,10 @@ function loadImage() {
 	const file = document.querySelector("input[type=file]").files[0];
 	if (!file) return;
 
+	// Set filename
+	const filename = document.getElementById("img").value.split("\\").pop();
+	document.getElementById("filename").textContent = `(${filename})`;
+
 	const reader = new FileReader();
 	reader.onloadend = () => {
 		const editor = document.querySelector(".editor");

@@ -1,7 +1,7 @@
 {{ define "step1" }}
 <form action="" id="file" class="file-upload center" onsubmit="return false">
-	<label class="file-input shadow">
-		<p>Upload File</p>
+	<label class="file-input shadow button">
+		<p style="color: white">Upload File</p>
 		<input
 			required
 			name="Image"
@@ -13,5 +13,6 @@
 		/>
 	</label>
 	<p>or paste here</p>
+	<sub id="filename"></sub>
 </form>
 {{ end }}
