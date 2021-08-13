@@ -15,14 +15,16 @@ type Vector struct {
 const (
 	Rectangle = 0
 	Circle    = 1
+	Polygon   = 2
 )
 
 // Data comes in as array of MaskShape
 type Shape struct {
 	Type    int
+	Opacity int
 	Pos     Vector
 	Size    Vector
-	Opacity int
+	Points  []Vector
 }
 
 // Get image rect of shape
