@@ -18,7 +18,6 @@ const (
 	Polygon   = 2
 )
 
-// Data comes in as array of MaskShape
 type Shape struct {
 	Type    int
 	Opacity int
@@ -27,8 +26,8 @@ type Shape struct {
 	Points  []Vector
 }
 
-// Get image rect of shape
-func (s *Shape) rect() image.Rectangle {
+// Get image rect of the shape
+func (s *Shape) Rect() image.Rectangle {
 	// x1 y1 is origin
 	// second args are second position but here a width/height is used
 	// therefore the position x2 and y2 needs to be shifted by x1 and y1 to
@@ -36,9 +35,9 @@ func (s *Shape) rect() image.Rectangle {
 	return image.Rect(s.Pos.X, s.Pos.Y, s.Size.X + s.Pos.X, s.Size.Y + s.Pos.Y)
 }
 
-// Load from filename
-func LoadImage(filename string) (img image.Image, err error) {
-	file, err := os.Open(filename)
+// Load image from file
+func LoadImage(path string) (img image.Image, err error) {
+	file, err := os.OpenFile(path, os.O_RDONLY|os.O_CREATE, os.ModePerm)
 	if err != nil {
 		return img, err
 	}
@@ -48,7 +47,7 @@ func LoadImage(filename string) (img image.Image, err error) {
 	return img, err
 }
 
-// Load from byte array
+// Load image from bytes
 func BLoadImage(byt []byte) (img image.Image, err error) {
 	reader := bytes.NewReader(byt)
 	img, _, err = image.Decode(reader)
@@ -57,7 +56,7 @@ func BLoadImage(byt []byte) (img image.Image, err error) {
 
 // Write image as file
 func WriteImage(path string, img image.Image) (err error) {
-	file, err := os.OpenFile(path, os.O_WRONLY|os.O_APPEND|os.O_CREATE, os.ModeAppend)
+	file, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, os.ModePerm)
 	if err != nil {
 		return err
 	}
@@ -66,7 +65,7 @@ func WriteImage(path string, img image.Image) (err error) {
 	return png.Encode(file, img)
 }
 
-// Get encoded image bytes
+// Encode image to byte array
 func BWriteImage(img image.Image) (byt []byte, err error) {
 	var writer bytes.Buffer
 	err = png.Encode(&writer, img)

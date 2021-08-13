@@ -14,6 +14,12 @@ func NewMask(rect image.Rectangle) *Mask {
 	return &Mask{mask}
 }
 
+// Draw single shape to mask
+func (m *Mask) DrawShape(shape Shape) {
+	m.DrawShapes([]Shape{shape})
+}
+
+// Draw multiple shapes to mask. Shapes with overlap eachother
 func (m *Mask) DrawShapes(shapes []Shape) {
 	for _, shape := range shapes {
 		switch (shape.Type) {
@@ -25,7 +31,7 @@ func (m *Mask) DrawShapes(shapes []Shape) {
 }
 
 // Draws given image to a buffer using m as a mask. Returns said buffer
-func (m *Mask) MaskImage(img image.Image) image.Image {
+func (m *Mask) DrawToImage(img image.Image) image.Image {
 	rect := img.Bounds()
 	zero := image.Pt(0, 0)
 	buffer := image.NewRGBA(rect)

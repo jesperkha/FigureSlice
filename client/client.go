@@ -94,7 +94,7 @@ func handleImageRequest(res http.ResponseWriter, req *http.Request) (status int,
 	
 	mask := img.NewMask(rawImage.Bounds())
 	mask.DrawShapes(shapeData)
-	finalImage := mask.MaskImage(rawImage)
+	finalImage := mask.DrawToImage(rawImage)
 	
 	if req.PostFormValue("Trim") == "on" {
 		finalImage = img.TrimWhitespace(finalImage)

@@ -21,9 +21,4 @@ func main() {
 
 	log.Print("Open on port 3000")
 	log.Fatal(http.ListenAndServe(":3000", nil))
-
-	// i, err := img.LoadImage("./test.png")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
 }

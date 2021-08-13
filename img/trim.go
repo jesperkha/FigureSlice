@@ -5,6 +5,7 @@ import (
 	"image/draw"
 )
 
+// Removes whitespace around image. Returns new image.
 func TrimWhitespace(img image.Image) image.Image {
 	var (
 		dx = img.Bounds().Dx()

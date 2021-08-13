@@ -10,7 +10,7 @@ import (
 func (m *Mask) drawRect(shape Shape) {
 	// Draw uniform rect to mask at shapes point
 	col := color.RGBA{0, 0, 0, uint8(shape.Opacity)}
-	draw.Draw(m, shape.rect(), &image.Uniform{col}, image.Pt(0, 0), draw.Src)
+	draw.Draw(m, shape.Rect(), &image.Uniform{col}, image.Pt(0, 0), draw.Src)
 }
 
 func (m *Mask) drawCircle(shape Shape) {
@@ -84,5 +84,5 @@ func (mask *Mask) drawPolygon(shape Shape) {
 		}
 	}
 
-	draw.Draw(mask, rect, buffer, image.Pt(0, 0), draw.Src)
+	draw.Draw(mask, rect, buffer, image.Pt(rx, ry), draw.Src)
 }
