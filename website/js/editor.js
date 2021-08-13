@@ -7,12 +7,14 @@ const CIRCLE = 1;
 
 const minSize = 20;
 const shapes = ["rectangle", "circle"];
-const maxHeight = 35; // vw
+const maxHeight = 70; // vh
 
-let ImageWidth = 0;
-let ImageHeight = 0;
-let ImageRatio = 0;
-let ImageURL = "";
+let CssWidth;
+let CssHeight;
+let ImageWidth;
+let ImageHeight;
+let ImageRatio;
+let ImageURL;
 
 let listShapes = [];
 let vSize = [0, 0];
@@ -113,7 +115,7 @@ document.addEventListener("mouseup", e => {
 			const oy = -(startPos[1] - editor.offsetTop);
 			div.style.backgroundPosition = `${ox}px ${oy}px`;
 			div.style.backgroundImage = `url(${ImageURL})`;
-			div.style.backgroundSize = maxHeight * ImageRatio + "vw 35vw";
+			div.style.backgroundSize = `${CssWidth}vh ${CssHeight}vh`;
 
 			setDiv(div, vSize[0], vSize[1], startPos[0], startPos[1]);
 			editor.appendChild(div);

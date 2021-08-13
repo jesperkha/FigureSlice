@@ -1,0 +1,50 @@
+{{ define "step2" }}
+<div class="context-menu">
+	<p class="context-remove" onclick="removeShape();">Remove</p>
+	<div class="context-sliders">
+		<label for="opacity">Opcaity:</label>
+		<input name="opacity" type="range" oninput="changeOpacity(this);" />
+	</div>
+	<script>
+		const changeOpacity = e => (selected.style.opacity = e.value / 100);
+		const toggleTool = (n, div) => {
+			shapeType = n;
+			document.querySelectorAll(".tool").forEach(e => e.classList.remove("toolbar-selected"));
+			div.classList.add("toolbar-selected");
+		};
+	</script>
+</div>
+
+<div class="editor-frame">
+	<div class="toolbar">
+		<h2>Tools:</h2>
+		<p class="tool toolbar-selected" onclick="toggleTool(0, this)">Rectangle</p>
+		<p class="tool" onclick="toggleTool(1, this)">Circle</p>
+		<p onclick="clearAll()">Clear All</p>
+		<script>
+			function removeShape() {
+				if (selected) {
+					listShapes.splice(listShapes.indexOf(selected), 1);
+					editor.removeChild(selected);
+					ctxMenu.style.display = "none";
+					selected = null;
+				}
+			}
+			function clearAll() {
+				for (const s of listShapes) {
+					editor.removeChild(s);
+				}
+
+				listShapes = [];
+			}
+		</script>
+	</div>
+
+	<div class="editor-container center">
+		<div id="editor" class="editor shadow center">
+			<img src="" alt="" class="editor-image" draggable="false" id="editor-bg" />
+			<div class="visualizer"></div>
+		</div>
+	</div>
+</div>
+{{ end }}

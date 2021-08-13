@@ -1,0 +1,17 @@
+{{ define "step1" }}
+<form action="" id="file" class="file-upload center" onsubmit="return false">
+	<label class="file-input shadow">
+		<p>Upload File</p>
+		<input
+			required
+			name="Image"
+			onchange="loadImage(); clearAll();"
+			type="file"
+			id="img"
+			accept="image/png"
+			value="Upload Image"
+		/>
+	</label>
+	<p>or paste here</p>
+</form>
+{{ end }}

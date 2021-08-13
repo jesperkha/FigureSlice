@@ -1,7 +1,13 @@
-async function getMaskedImage() {
-	const formData = new FormData(document.getElementById("form"));
+function submitForm() {
+	const formData = new FormData(document.getElementById("file"));
 	formData.append("Shapes", JSON.stringify(GetAllShapeData()));
+	formData.append("Trim", document.getElementById("trim").value);
+	if (document.getElementById("img").files.length > 0) {
+		getMaskedImage(formData);
+	}
+}
 
+async function getMaskedImage(formData) {
 	const res = await fetch("/image", {
 		method: "POST",
 		headers: {
@@ -40,10 +46,22 @@ function loadImage() {
 			ImageHeight = img.height;
 			ImageRatio = img.width / img.height;
 			ImageURL = reader.result;
+			document.querySelector(".editor-image").src = reader.result;
 
-			document.querySelector(".background").src = reader.result;
-			editor.style.width = maxHeight * ImageRatio + "vw";
-			editor.style.height = maxHeight + "vw";
+			// Correct for wider images
+			let correction = 1;
+			if (ImageRatio > 2) {
+				let newRatio = ImageRatio;
+				while (newRatio > 2) {
+					correction *= 0.9;
+					newRatio = (img.width / img.height) * correction;
+				}
+			}
+
+			CssWidth = maxHeight * ImageRatio * correction;
+			CssHeight = maxHeight * correction;
+			editor.style.width = CssWidth + "vh";
+			editor.style.height = CssHeight + "vh";
 			editor.style.display = "flex";
 		};
 
