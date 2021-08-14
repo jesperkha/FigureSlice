@@ -23,4 +23,4 @@ To get the shape drawing p
 
 The editor is made with plain javascript and DOM manipulation. The shapes draw are just divs with a displaced background image relative to the source image. When done, the shapes positions and sizes are scaled to match the dimensions of the source image.
 
-The code for the image editing process is found in the [img directory](https://github.com/jesperkha/FigureSlice/img). The shapes sent from the editor are drawn to a blank image buffer and that buffer is used as a mask when drawing the new image with the standard Go image/draw library.
+The code for the image editing process is found in the [img directory](https://github.com/jesperkha/FigureSlice/tree/main/img). The shapes sent from the editor are drawn to a blank image buffer and that buffer is used as a mask when drawing the new image with the standard Go image/draw library.
