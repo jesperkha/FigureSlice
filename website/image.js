@@ -2,6 +2,7 @@ function submitForm() {
 	const formData = new FormData(document.getElementById("file"));
 	formData.append("Shapes", JSON.stringify(GetAllShapeData()));
 	formData.append("Trim", document.getElementById("trim").value);
+
 	if (document.getElementById("img").files.length > 0) {
 		getMaskedImage(formData);
 	}

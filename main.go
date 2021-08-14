@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/jesperkha/FigureSlice/client"
 )
@@ -11,7 +13,7 @@ func main() {
 	http.HandleFunc("/", client.HandleRequest)
 
 	var filePrefixes = map[string]string{
-		"/js/":  "./website/js/",
+		"/js/":  "./website/",
 		"/css/": "./website/css/",
 		"/src/": "./website/src/",
 	}
@@ -20,6 +22,9 @@ func main() {
 		http.Handle(key, http.StripPrefix(key, http.FileServer(http.Dir(value))))
 	}
 
-	log.Print("Open on port 3000")
-	log.Fatal(http.ListenAndServe(":3000", nil))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }

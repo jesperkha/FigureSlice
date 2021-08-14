@@ -15,8 +15,6 @@ Figure Slice is a web tool for clipping images with various shapes. The in-brows
 
 The website has clear and consice instructions when it comes to actually using the editor.
 
-To get the shape drawing p
-
 <br>
 
 ## **How it works**
