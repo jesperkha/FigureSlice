@@ -13,6 +13,7 @@ func main() {
 	var filePrefixes = map[string]string{
 		"/js/":  "./website/js/",
 		"/css/": "./website/css/",
+		"/src/": "./website/src/",
 	}
 
 	for key, value := range filePrefixes {

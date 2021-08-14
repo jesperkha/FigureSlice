@@ -12,23 +12,42 @@
 			href="https://fonts.googleapis.com/css2?family=Jost:wght@700&family=Rubik:wght@500&display=swap"
 			rel="stylesheet"
 		/>
+		<link href="https://fonts.googleapis.com/css2?family=Jost&display=swap" rel="stylesheet" />
 
 		<script defer src="/js/image.js"></script>
 		<script defer src="/js/editor.js"></script>
 
 		<link rel="stylesheet" href="/css/main.css" />
+		<link rel="stylesheet" href="/css/front.css" />
 		<link rel="stylesheet" href="/css/content.css" />
 
 		<title>FigureSlice</title>
 	</head>
 	<body>
-		<section>
+		<section>{{ template "front" }}</section>
+
+		<section id="step1">
 			<div class="step">
 				<h1>Step 1</h1>
 				<div class="step-line"></div>
 				<p>Upload an image you want to edit</p>
 			</div>
-			{{ template "step1" }}
+			<form action="" id="file" class="file-upload center" onsubmit="return false">
+				<label class="file-input shadow button">
+					<p style="color: white">Upload File</p>
+					<input
+						required
+						name="Image"
+						onchange="loadImage(); clearAll();"
+						type="file"
+						id="img"
+						accept="image/*"
+						value="Upload Image"
+					/>
+				</label>
+				<p>or paste here</p>
+				<sub id="filename"></sub>
+			</form>
 		</section>
 
 		<section>

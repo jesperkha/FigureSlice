@@ -8,6 +8,19 @@
 	--primary: #b251ff;
 }
 
+html,
+body {
+	scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+	width: 0.5em;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: black;
+}
+
 body {
 	display: flex;
 	flex-direction: column;
@@ -15,12 +28,12 @@ body {
 }
 
 section {
-	width: 80%;
+	width: 70%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-wrap: wrap;
-	margin: 15vh 0;
+	margin-bottom: 15vh;
 }
 
 img {
@@ -47,6 +60,11 @@ h1 {
 h2 {
 	font-size: 1.2em;
 	font-family: "Rubik", sans-serif;
+}
+
+h3 {
+	font-size: 1.5em;
+	font-family: "Jost", sans-serif;
 }
 
 .center {
@@ -112,6 +130,13 @@ h2 {
 	padding: 1em;
 	display: flex;
 	flex-direction: column;
+}
+
+.context-menu label,
+.context-menu p {
+	color: white;
+	font-size: 1em;
+	font-family: "Rubik", sans-serif;
 }
 
 .context-sliders input {

@@ -52,6 +52,11 @@
 	cursor: pointer;
 }
 
+#clear-all {
+	margin-top: 10vh;
+	text-decoration: underline;
+}
+
 .toolbar-selected {
 	background-color: var(--primary);
 	color: white !important;
