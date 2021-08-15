@@ -14,7 +14,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-	width: 0.5em;
+	width: 0.5rem;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -43,7 +43,7 @@ img {
 p,
 a {
 	color: black;
-	font-size: 0.9em;
+	font-size: 0.9rem;
 	font-family: "Rubik", sans-serif;
 	text-decoration: none;
 }
@@ -53,17 +53,17 @@ a:hover {
 }
 
 h1 {
-	font-size: 2em;
+	font-size: 2rem;
 	font-family: "Jost", sans-serif;
 }
 
 h2 {
-	font-size: 1.2em;
+	font-size: 1.2rem;
 	font-family: "Rubik", sans-serif;
 }
 
 h3 {
-	font-size: 1.5em;
+	font-size: 1.5rem;
 	font-family: "Jost", sans-serif;
 }
 
@@ -74,24 +74,24 @@ h3 {
 }
 
 .shadow {
-	box-shadow: 0 0 2em 0 rgba(0, 0, 0, 0.3);
+	box-shadow: 0 0 2rem 0 rgba(0, 0, 0, 0.3);
 }
 
 .button {
 	outline: none;
 	border: none;
-	padding: 0.7em 1.2em;
+	padding: 0.7rem 1.2rem;
 	background-color: var(--primary);
 	color: white;
-	border-radius: 2em;
+	border-radius: 2rem;
 	cursor: pointer;
-	margin: 2em;
+	margin: 2rem;
 	font-family: "Rubik", sans-serif;
 	transition: all 0.1s ease;
 }
 
 .button:hover {
-	box-shadow: 0 0 2em 0 rgba(178, 81, 255, 0.5);
+	box-shadow: 0 0 2rem 0 rgba(178, 81, 255, 0.5);
 	text-decoration: none;
 }
 
@@ -101,11 +101,11 @@ h3 {
 }
 
 .step-line {
-	height: 0.3em;
-	width: 3em;
+	height: 0.3rem;
+	width: 3rem;
 	background-color: var(--primary);
-	border-radius: 1em;
-	margin: 1em 0;
+	border-radius: 1rem;
+	margin: 1rem 0;
 }
 
 .context-menu {
@@ -113,7 +113,7 @@ h3 {
 	position: absolute;
 	background-color: #1b1d29;
 	color: white;
-	font-size: 0.9em;
+	font-size: 0.9rem;
 	display: flex;
 	flex-direction: column;
 	display: none;
@@ -125,10 +125,10 @@ h3 {
 	cursor: pointer;
 }
 
-.context-remove,
+.context-emove,
 .context-sliders {
 	width: 100%;
-	padding: 1em;
+	padding: 1rem;
 	display: flex;
 	flex-direction: column;
 }
@@ -136,10 +136,16 @@ h3 {
 .context-menu label,
 .context-menu p {
 	color: white;
-	font-size: 1em;
+	font-size: 1rem;
 	font-family: "Rubik", sans-serif;
 }
 
 .context-sliders input {
-	padding: 0.5em;
+	padding: 0.5rem;
+}
+
+@media screen and (min-width: 1700px) {
+	:root {
+		font-size: 20px;
+	}
 }

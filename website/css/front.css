@@ -20,7 +20,7 @@
 
 .navbar div p,
 a {
-	margin: 1em;
+	margin: 1rem;
 }
 
 .navbar span {
@@ -29,7 +29,7 @@ a {
 
 .logo {
 	position: relative;
-	--offset: 2.8em;
+	--offset: 2.8rem;
 	right: var(--offset);
 }
 
@@ -50,7 +50,7 @@ a {
 }
 
 .hero p {
-	font-size: 1em;
+	font-size: 1rem;
 	font-family: "Jost", sans-serif;
 }
 
@@ -65,7 +65,7 @@ a {
 }
 
 .hero-image img {
-	width: 50%;
+	width: 15rem;
 }
 
 .hero-image {

@@ -7,7 +7,7 @@
 .file-upload {
 	width: 80%;
 	height: 45vh;
-	border-radius: 0.5em;
+	border-radius: 0.5rem;
 	background-color: #f7f7f7;
 }
 
@@ -17,7 +17,7 @@
 
 #filename {
 	text-align: center;
-	margin-left: 2em;
+	margin-left: 2rem;
 }
 
 /* Step 2 */
@@ -35,18 +35,18 @@
 }
 
 .toolbar h2 {
-	margin-bottom: 1em;
+	margin-bottom: 1rem;
 }
 
 .toolbar p {
-	--offset: 2em;
+	--offset: 2rem;
 
 	position: relative;
-	padding: 0.7em 0;
+	padding: 0.7rem 0;
 	padding-left: var(--offset);
 	right: var(--offset);
-	border-radius: 3em 0 0 3em;
-	margin-top: 0.5em;
+	border-radius: 3rem 0 0 3rem;
+	margin-top: 0.5rem;
 	width: calc(100% + var(--offset));
 	color: black;
 	cursor: pointer;
@@ -69,7 +69,7 @@
 }
 
 .editor {
-	border-radius: 0.3em;
+	border-radius: 0.3rem;
 	height: 70vh;
 	overflow: hidden;
 	cursor: crosshair;
@@ -125,7 +125,7 @@
 	background-color: #f7f7f7;
 	width: 80%;
 	height: 70vh;
-	border-radius: 0.5em;
+	border-radius: 0.5rem;
 }
 
 .preview img {
@@ -134,11 +134,11 @@
 }
 
 input[type="checkbox"] {
-	margin: 1em;
+	margin: 1rem;
 }
 
 .copy-download {
-	margin: 3em;
+	margin: 3rem;
 }
 
 /* Footer */
@@ -150,5 +150,5 @@ input[type="checkbox"] {
 }
 
 .footer * {
-	margin: 2em;
+	margin: 2rem;
 }
