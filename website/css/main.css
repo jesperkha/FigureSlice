@@ -125,7 +125,7 @@ h3 {
 	cursor: pointer;
 }
 
-.context-emove,
+.context-remove,
 .context-sliders {
 	width: 100%;
 	padding: 1rem;
@@ -145,6 +145,12 @@ h3 {
 }
 
 @media screen and (min-width: 1700px) {
+	:root {
+		font-size: 18px;
+	}
+}
+
+@media screen and (min-width: 2000px) {
 	:root {
 		font-size: 20px;
 	}
