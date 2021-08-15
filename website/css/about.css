@@ -1,0 +1,19 @@
+section {
+	flex-direction: column;
+	width: 60%;
+	margin-top: 10vh;
+}
+
+* {
+	margin: 1rem 0;
+}
+
+h1,
+h2,
+a {
+	width: 100%;
+}
+
+p {
+	font-family: "Jost", sans-serif;
+}

@@ -17,7 +17,7 @@ Figure Slice is a web tool for clipping images with various shapes. The in-brows
 
 ## **How to use**
 
-The website has clear and consice instructions when it comes to actually using the editor.
+The website has clear and concise instructions when it comes to actually using the editor.
 If something is unclear or you find a bug that is not listed below, please feel free to create an issue.
 
 <br>
@@ -25,7 +25,6 @@ If something is unclear or you find a bug that is not listed below, please feel 
 **Known bugs / issues**
 
 - Circles will sometimes overlap the edge of the editor when drawing
-- Currently only supports the `png` image format
 - Opacity sliders value is not set to the shapes opacity when selected
 
 <br>

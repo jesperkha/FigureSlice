@@ -8,7 +8,7 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
-			href="https://fonts.googleapis.com/css2?family=Jost:wght@700&family=Rubik:wght@500&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Jost:wght@400&family=Rubik:wght@500&display=swap"
 			rel="stylesheet"
 		/>
 
@@ -17,10 +17,42 @@
 
 		<link rel="stylesheet" href="/css/main.css" />
 		<link rel="stylesheet" href="/css/content.css" />
+		<link rel="stylesheet" href="/css/about.css" />
 
 		<title>About | Figure Slice</title>
 	</head>
 	<body>
-		<a href="/">Go back</a>
+		<section>
+			<a style="width: 100%" href="/">Go back</a>
+			<br />
+			<h1>FigureSlice</h1>
+			<br />
+			<p>
+				Figure Slice is a web tool for clipping images with various shapes. The in-browser editor lets you create shapes
+				that go over your image and act as a mask. When the image is processed you will only get the parts of the image
+				that are seen through the shapes drawn. Changing the opacity of each shape is also possible.
+			</p>
+			<br />
+			<img
+				src="https://github.com/jesperkha/FigureSlice/blob/main/.github/editor.jpg?raw=true"
+				alt="editor"
+				width="70%"
+			/>
+			<br />
+			<h2>How it works</h2>
+			<br />
+			<p>
+				The editor is made with plain javascript and DOM manipulation. The shapes drawn are just divs with a displaced
+				background image relative to the source image. When done, the shapes positions and sizes are scaled to match the
+				dimensions of the source image. The shapes sent from the editor are drawn to a blank image buffer and that
+				buffer is used as a mask when drawing the new image with the standard Go image/draw library.
+			</p>
+			<br />
+			<img
+				src="https://github.com/jesperkha/FigureSlice/blob/main/.github/example.png?raw=true"
+				alt="example"
+				width="70%"
+			/>
+		</section>
 	</body>
 </html>

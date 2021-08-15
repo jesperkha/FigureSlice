@@ -3,6 +3,7 @@ package img
 import (
 	"bytes"
 	"image"
+	_ "image/jpeg"
 	"image/png"
 	"os"
 )
