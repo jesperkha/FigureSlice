@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"strings"
 	"text/template"
@@ -39,7 +38,6 @@ func HandleRequest(res http.ResponseWriter, req *http.Request) {
 		if route == split[1] {
 			status, err := handle(res, req)
 			if err != nil || status != http.StatusOK {
-				log.Fatal(err)
 				http.Redirect(res, req, fmt.Sprintf("/error/%d", status), status)
 			}
 
