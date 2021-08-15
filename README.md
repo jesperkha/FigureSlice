@@ -1,6 +1,6 @@
 # **FigureSlice**
 
-[Go to website](https://figureslice.herokuapp.com)
+[Go to the website](https://figureslice.herokuapp.com)
 
 <br>
 
@@ -10,7 +10,7 @@ Figure Slice is a web tool for clipping images with various shapes. The in-brows
 
 <br>
 
-<img src="https://github.com/jesperkha/FigureSlice/blob/main/.github/editor.jpg?raw=true" alt="editor" width="500"/>
+<img src="https://github.com/jesperkha/FigureSlice/blob/main/.github/editor.jpg?raw=true" alt="editor" width="70%"/>
 
 <br>
 <br>
@@ -18,7 +18,17 @@ Figure Slice is a web tool for clipping images with various shapes. The in-brows
 ## **How to use**
 
 The website has clear and consice instructions when it comes to actually using the editor.
+If something is unclear or you find a bug that is not listed below, please feel free to create an issue.
 
+<br>
+
+**Known bugs / issues**
+
+- Circles will sometimes overlap the edge of the editor when drawing
+- Currently only supports the `png` image format
+- Opacity sliders value is not set to the shapes opacity when selected
+
+<br>
 <br>
 
 ## **How it works**
@@ -29,4 +39,4 @@ The code for the image editing process is found in the [img directory](https://g
 
 <br>
 
-<img src="https://github.com/jesperkha/FigureSlice/blob/main/.github/example.png?raw=true" alt="example" width="500"/>
+<img src="https://github.com/jesperkha/FigureSlice/blob/main/.github/example.png?raw=true" alt="example" width="70%"/>
