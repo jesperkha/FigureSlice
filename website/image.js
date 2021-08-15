@@ -1,14 +1,17 @@
-function submitForm() {
+async function submitForm() {
 	const formData = new FormData(document.getElementById("file"));
-	formData.append("Shapes", JSON.stringify(GetAllShapeData()));
+	formData.append("Shapes", JSON.stringify(getAllShapeData()));
 	formData.append("Trim", document.getElementById("trim").value);
 
 	if (document.getElementById("img").files.length > 0) {
-		getMaskedImage(formData);
+		const status = await getNewImage(formData);
+		if (status !== 200) {
+			window.location = "/error/" + status;
+		}
 	}
 }
 
-async function getMaskedImage(formData) {
+async function getNewImage(formData) {
 	const res = await fetch("/image", {
 		method: "POST",
 		headers: {
@@ -19,19 +22,15 @@ async function getMaskedImage(formData) {
 		body: formData,
 	});
 
-	if (res.status !== 200) {
-		window.location = "/error/" + res.status;
-		return;
-	}
-
-	// Get response image
 	const blob = await res.blob();
 	const reader = new FileReader();
 	reader.onloadend = () => {
 		document.getElementById("preview").setAttribute("src", reader.result);
+		document.getElementById("download").setAttribute("href", reader.result);
 	};
 
 	reader.readAsDataURL(blob);
+	return res.status;
 }
 
 function loadImage() {

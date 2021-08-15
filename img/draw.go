@@ -22,7 +22,7 @@ func (m *Mask) drawCircle(shape Shape) {
 			c2 := float64(dx * dx + dy * dy)
 			dist := int(math.Sqrt(c2))
 
-			if dist < shape.Size.X {
+			if dist < shape.Size.X / 2 {
 				m.Set(x, y, color.RGBA{0, 0, 0, uint8(shape.Opacity)})
 			}
 		}

@@ -135,10 +135,10 @@ document.addEventListener("mouseup", e => {
 	mouseDown = false;
 });
 
-// Gets all the shapes as array of objects with same key types as Shape struct
-// Called when shape data should be exported
 const nmap = (n, a, b, x, y) => ((n - a) / (b - a)) * (y - x) + x;
-function GetAllShapeData() {
+
+// Gets all the shapes as array of objects with same key types as Shape struct
+function getAllShapeData() {
 	const data = [];
 	const scale = editor.offsetWidth / ImageWidth;
 
@@ -159,7 +159,7 @@ function GetAllShapeData() {
 			},
 			Size: {
 				// Width is radius for circles
-				X: Math.floor(w / (t == CIRCLE ? 2 : 1) / scale),
+				X: Math.floor(w / scale),
 				Y: Math.floor(h / scale),
 			},
 			Opacity: Math.floor(nmap(Number(o), 0, 1, 0, 255)),

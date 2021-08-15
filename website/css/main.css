@@ -92,6 +92,7 @@ h3 {
 
 .button:hover {
 	box-shadow: 0 0 2em 0 rgba(178, 81, 255, 0.5);
+	text-decoration: none;
 }
 
 .step {
