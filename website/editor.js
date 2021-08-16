@@ -18,6 +18,7 @@ let ImageWidth;
 let ImageHeight;
 let ImageRatio;
 let ImageURL;
+let ImageBlob;
 
 let listShapes = [];
 let vSize = [0, 0];

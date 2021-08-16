@@ -11,6 +11,9 @@ import (
 
 func main() {
 	http.HandleFunc("/", client.HandleRequest)
+	if args := os.Args; len(args) > 1 {
+		client.TestMode = args[1] == "-d" // Log errors
+	}
 
 	var filePrefixes = map[string]string{
 		"/js/":  "./website/",

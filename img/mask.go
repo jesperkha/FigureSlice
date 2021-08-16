@@ -19,7 +19,7 @@ func (m *Mask) DrawShape(shape Shape) {
 	m.DrawShapes([]Shape{shape})
 }
 
-// Draw multiple shapes to mask. Shapes with overlap eachother
+// Draw multiple shapes to mask. Shapes will overlap eachother
 func (m *Mask) DrawShapes(shapes []Shape) {
 	for _, shape := range shapes {
 		switch (shape.Type) {

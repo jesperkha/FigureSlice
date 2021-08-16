@@ -1,9 +1,10 @@
-async function submitForm() {
-	const formData = new FormData(getE("file"));
-	formData.append("Shapes", JSON.stringify(getAllShapeData()));
-	formData.append("Trim", getE("trim").value);
+async function submitImage() {
+	if (ImageBlob) {
+		const formData = new FormData();
+		formData.append("Shapes", JSON.stringify(getAllShapeData()));
+		formData.append("Trim", getE("trim").value);
+		formData.append("Image", ImageBlob);
 
-	if (getE("img").files.length > 0) {
 		const status = await getNewImage(formData);
 		if (status !== 200) {
 			window.location = "/error/" + status;
@@ -49,10 +50,13 @@ function loadFromFile() {
 	// Set filename
 	const filename = getE("img").value.split("\\").pop();
 	getE("filename").textContent = `(${filename})`;
+
 	loadImage(file);
 }
 
 function loadImage(blob) {
+	ImageBlob = blob;
+
 	const reader = new FileReader();
 	reader.onloadend = () => {
 		const dataUrl = reader.result;

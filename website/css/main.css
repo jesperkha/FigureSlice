@@ -148,6 +148,9 @@ h3 {
 	:root {
 		font-size: 18px;
 	}
+	section {
+		width: 60%;
+	}
 }
 
 @media screen and (min-width: 2000px) {

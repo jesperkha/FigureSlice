@@ -5,12 +5,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 	"text/template"
 
 	"github.com/jesperkha/FigureSlice/img"
 )
+
+var TestMode bool
 
 type handlerFunc func (res http.ResponseWriter, req *http.Request) (status int, err error)
 
@@ -35,14 +38,21 @@ func HandleRequest(res http.ResponseWriter, req *http.Request) {
 	
 	split := strings.Split(path, "/")
 	for route, handle := range routes {
-		if route == split[1] {
-			status, err := handle(res, req)
-			if err != nil || status != http.StatusOK {
-				http.Redirect(res, req, fmt.Sprintf("/error/%d", status), status)
+		if route != split[1] {
+			continue
+		}
+		
+		if status, err := handle(res, req); err != nil {
+			if TestMode {
+				log.Print(err)
 			}
 
-			return
+			if status != http.StatusOK {
+				http.Redirect(res, req, fmt.Sprintf("/error/%d", status), status)
+			}
 		}
+		
+		return
 	}
 
 	http.Redirect(res, req, "/error/404", http.StatusNotFound)
