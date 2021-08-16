@@ -3,7 +3,7 @@
 	<p class="context-remove" onclick="removeShape();">Remove</p>
 	<div class="context-sliders">
 		<label for="opacity">Opcaity:</label>
-		<input name="opacity" type="range" oninput="changeOpacity(this);" />
+		<input id="opacity-slider" name="opacity" type="range" oninput="changeOpacity(this);" />
 	</div>
 	<script>
 		const changeOpacity = e => (selected.style.opacity = e.value / 100);

@@ -1,9 +1,9 @@
 async function submitForm() {
-	const formData = new FormData(document.getElementById("file"));
+	const formData = new FormData(getE("file"));
 	formData.append("Shapes", JSON.stringify(getAllShapeData()));
-	formData.append("Trim", document.getElementById("trim").value);
+	formData.append("Trim", getE("trim").value);
 
-	if (document.getElementById("img").files.length > 0) {
+	if (getE("img").files.length > 0) {
 		const status = await getNewImage(formData);
 		if (status !== 200) {
 			window.location = "/error/" + status;
@@ -25,8 +25,8 @@ async function getNewImage(formData) {
 	const blob = await res.blob();
 	const reader = new FileReader();
 	reader.onloadend = () => {
-		document.getElementById("preview").setAttribute("src", reader.result);
-		document.getElementById("download").setAttribute("href", reader.result);
+		getE("preview").setAttribute("src", reader.result);
+		getE("download").setAttribute("href", reader.result);
 	};
 
 	reader.readAsDataURL(blob);
@@ -34,23 +34,23 @@ async function getNewImage(formData) {
 }
 
 function loadImage() {
-	const file = document.querySelector("input[type=file]").files[0];
+	const file = getQ("input[type=file]").files[0];
 	if (!file) return;
 
 	// Set filename
-	const filename = document.getElementById("img").value.split("\\").pop();
-	document.getElementById("filename").textContent = `(${filename})`;
+	const filename = getE("img").value.split("\\").pop();
+	getE("filename").textContent = `(${filename})`;
 
 	const reader = new FileReader();
 	reader.onloadend = () => {
-		const editor = document.querySelector(".editor");
+		const editor = getQ(".editor");
 		const img = new Image();
 		img.onload = () => {
 			ImageWidth = img.width;
 			ImageHeight = img.height;
 			ImageRatio = img.width / img.height;
 			ImageURL = reader.result;
-			document.querySelector(".editor-image").src = reader.result;
+			getQ(".editor-image").src = reader.result;
 
 			// Correct for wider images
 			let correction = 1;

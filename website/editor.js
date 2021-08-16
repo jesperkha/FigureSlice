@@ -1,12 +1,15 @@
-const visualizer = document.querySelector(".visualizer");
-const ctxMenu = document.querySelector(".context-menu");
-const editor = document.getElementById("editor");
+const getE = id => document.getElementById(id);
+const getQ = sel => document.querySelector(sel);
+
+const visualizer = getQ(".visualizer");
+const ctxMenu = getQ(".context-menu");
+const editor = getE("editor");
 
 const RECTANGLE = 0;
 const CIRCLE = 1;
+const POLYGON = 2;
 
 const minSize = 20;
-const shapes = ["rectangle", "circle"];
 const maxHeight = 70; // vh
 
 let CssWidth;
@@ -18,20 +21,10 @@ let ImageURL;
 
 let listShapes = [];
 let vSize = [0, 0];
-let shapeType = RECTANGLE;
+let startPos = [0, 0];
 let selected = null;
 let mouseDown = false;
-let startPos = [];
-
-// Additional styling for the visualizer in editor
-const shapeConfig = {
-	rectangle: div => {
-		div.style.borderRadius = "0%";
-	},
-	circle: div => {
-		div.style.borderRadius = "50%";
-	},
-};
+let shapeType = RECTANGLE;
 
 function getMousePos(e) {
 	const x = e.clientX;
@@ -72,7 +65,7 @@ editor.addEventListener("mousedown", e => {
 	startPos = getMousePos(e);
 	const [x, y] = getMousePos(e);
 	setDiv(visualizer, 0, 0, x, y);
-	shapeConfig[shapes[shapeType]](visualizer);
+	visualizer.style.borderRadius = shapeType == 1 ? "50%" : "0%";
 	vSize = [10, 10];
 });
 
@@ -91,9 +84,10 @@ editor.addEventListener("mousemove", e => {
 		}
 
 		// For circle to not go past border
-		if (startPos[1] + h > editor.offsetTop + editor.offsetHeight) {
+		if (startPos[1] + h > editor.offsetTop + editor.offsetHeight)
 			h = w = editor.offsetTop + editor.offsetHeight - startPos[1];
-		}
+		else if (startPos[0] + w > editor.offsetLeft + editor.offsetWidth)
+			h = w = editor.offsetLeft + editor.offsetWidth - startPos[0];
 
 		setDiv(visualizer, w, h);
 		vSize = [w, h];
@@ -107,7 +101,7 @@ document.addEventListener("mouseup", e => {
 		// Create new shape
 		if (vSize[0] > minSize && vSize[1] > minSize) {
 			const div = document.createElement("div");
-			div.classList.add(shapes[shapeType]);
+			div.classList.add(["rectangle", "circle", "polygon"][shapeType]);
 			div.dataset.type = shapeType;
 			div.style.opacity = 1;
 
@@ -124,6 +118,7 @@ document.addEventListener("mouseup", e => {
 			div.addEventListener("contextmenu", e => {
 				e.preventDefault();
 				selected = div;
+				getE("opacity-slider").value = div.style.opacity * 100;
 				ctxMenu.style.display = "flex";
 				const [x, y] = getMousePos(e);
 				ctxMenu.style.left = `${x}px`;
