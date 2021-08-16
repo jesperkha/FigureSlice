@@ -155,3 +155,28 @@ h3 {
 		font-size: 20px;
 	}
 }
+
+.mobile {
+	display: none;
+}
+
+@media screen and (max-width: 500px) {
+	section {
+		display: none !important;
+	}
+
+	.mobile {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+
+	.mobile h1 {
+		text-align: center;
+	}
+
+	.mobile img {
+		width: 50%;
+	}
+}
