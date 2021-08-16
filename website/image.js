@@ -33,24 +33,39 @@ async function getNewImage(formData) {
 	return res.status;
 }
 
-function loadImage() {
+window.addEventListener("paste", e => {
+	for (const i of e.clipboardData.items) {
+		if (i.type.split("/")[0] == "image") {
+			getE("filename").textContent = "(from clipboard)";
+			loadImage(i.getAsFile());
+		}
+	}
+});
+
+function loadFromFile() {
 	const file = getQ("input[type=file]").files[0];
 	if (!file) return;
 
 	// Set filename
 	const filename = getE("img").value.split("\\").pop();
 	getE("filename").textContent = `(${filename})`;
+	loadImage(file);
+}
 
+function loadImage(blob) {
 	const reader = new FileReader();
 	reader.onloadend = () => {
+		const dataUrl = reader.result;
+
 		const editor = getQ(".editor");
 		const img = new Image();
+
 		img.onload = () => {
 			ImageWidth = img.width;
 			ImageHeight = img.height;
 			ImageRatio = img.width / img.height;
-			ImageURL = reader.result;
-			getQ(".editor-image").src = reader.result;
+			ImageURL = dataUrl;
+			getQ(".editor-image").src = dataUrl;
 
 			// Correct for wider images
 			let correction = 1;
@@ -69,8 +84,8 @@ function loadImage() {
 			editor.style.display = "flex";
 		};
 
-		img.src = reader.result;
+		img.src = dataUrl;
 	};
 
-	reader.readAsDataURL(file);
+	reader.readAsDataURL(blob);
 }

@@ -21,6 +21,8 @@
 		<link rel="stylesheet" href="/css/front.css" />
 		<link rel="stylesheet" href="/css/content.css" />
 
+		<link rel="icon" href="/src/logo.png" />
+
 		<title>FigureSlice</title>
 	</head>
 	<body>
@@ -43,7 +45,7 @@
 					<input
 						required
 						name="Image"
-						onchange="loadImage(); clearAll();"
+						onchange="loadFromFile(); clearAll();"
 						type="file"
 						id="img"
 						accept="image/png, image/jpeg"
