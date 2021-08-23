@@ -72,63 +72,65 @@ editor.addEventListener("mousedown", e => {
 
 // Resize shape outline
 editor.addEventListener("mousemove", e => {
-	if (mouseDown) {
-		if (vSize[0] < minSize || vSize[1] < minSize) visualizer.style.borderColor = "red";
-		else visualizer.style.borderColor = "gray";
-
-		const [x, y] = getMousePos(e);
-		let w = x - startPos[0];
-		let h = y - startPos[1];
-		if (shapeType == CIRCLE) {
-			const s = Math.max(w, h);
-			(w = s), (h = s);
-		}
-
-		// For circle to not go past border
-		if (startPos[1] + h > editor.offsetTop + editor.offsetHeight)
-			h = w = editor.offsetTop + editor.offsetHeight - startPos[1];
-		else if (startPos[0] + w > editor.offsetLeft + editor.offsetWidth)
-			h = w = editor.offsetLeft + editor.offsetWidth - startPos[0];
-
-		setDiv(visualizer, w, h);
-		vSize = [w, h];
+	if (!mouseDown) {
+		return;
 	}
+	
+	if (vSize[0] < minSize || vSize[1] < minSize) visualizer.style.borderColor = "red";
+	else visualizer.style.borderColor = "gray";
+
+	const [x, y] = getMousePos(e);
+	let w = x - startPos[0];
+	let h = y - startPos[1];
+	if (shapeType == CIRCLE) {
+		const s = Math.max(w, h);
+		(w = s), (h = s);
+	}
+
+	// For circle to not go past border
+	if (startPos[1] + h > editor.offsetTop + editor.offsetHeight)
+		h = w = editor.offsetTop + editor.offsetHeight - startPos[1];
+	else if (startPos[0] + w > editor.offsetLeft + editor.offsetWidth)
+		h = w = editor.offsetLeft + editor.offsetWidth - startPos[0];
+
+	setDiv(visualizer, w, h);
+	vSize = [w, h];
 });
 
 // Reset / create new shape at outline
 document.addEventListener("mouseup", e => {
-	if (mouseDown) {
-		toggleDraw(false);
-		// Create new shape
-		if (vSize[0] > minSize && vSize[1] > minSize) {
-			const div = document.createElement("div");
-			div.classList.add(["rectangle", "circle", "polygon"][shapeType]);
-			div.dataset.type = shapeType;
-			div.style.opacity = 1;
-
-			const ox = -(startPos[0] - editor.offsetLeft);
-			const oy = -(startPos[1] - editor.offsetTop);
-			div.style.backgroundPosition = `${ox}px ${oy}px`;
-			div.style.backgroundImage = `url(${ImageURL})`;
-			div.style.backgroundSize = `${CssWidth}vh ${CssHeight}vh`;
-
-			setDiv(div, vSize[0], vSize[1], startPos[0], startPos[1]);
-			editor.appendChild(div);
-			listShapes.push(div);
-
-			div.addEventListener("contextmenu", e => {
-				e.preventDefault();
-				selected = div;
-				getE("opacity-slider").value = div.style.opacity * 100;
-				ctxMenu.style.display = "flex";
-				const [x, y] = getMousePos(e);
-				ctxMenu.style.left = `${x}px`;
-				ctxMenu.style.top = `${y}px`;
-			});
-		}
+	if (!mouseDown) {
+		return;
 	}
+	
+	toggleDraw(false);
+	// Create new shape
+	if (vSize[0] > minSize && vSize[1] > minSize) {
+		const div = document.createElement("div");
+		div.classList.add(["rectangle", "circle", "polygon"][shapeType]);
+		div.dataset.type = shapeType;
+		div.style.opacity = 1;
 
-	mouseDown = false;
+		const ox = -(startPos[0] - editor.offsetLeft);
+		const oy = -(startPos[1] - editor.offsetTop);
+		div.style.backgroundPosition = `${ox}px ${oy}px`;
+		div.style.backgroundImage = `url(${ImageURL})`;
+		div.style.backgroundSize = `${CssWidth}vh ${CssHeight}vh`;
+
+		setDiv(div, vSize[0], vSize[1], startPos[0], startPos[1]);
+		editor.appendChild(div);
+		listShapes.push(div);
+
+		div.addEventListener("contextmenu", e => {
+			e.preventDefault();
+			selected = div;
+			getE("opacity-slider").value = div.style.opacity * 100;
+			ctxMenu.style.display = "flex";
+			const [x, y] = getMousePos(e);
+			ctxMenu.style.left = `${x}px`;
+			ctxMenu.style.top = `${y}px`;
+		});
+	}
 });
 
 const nmap = (n, a, b, x, y) => ((n - a) / (b - a)) * (y - x) + x;
@@ -154,7 +156,6 @@ function getAllShapeData() {
 				Y: Math.floor(y / scale),
 			},
 			Size: {
-				// Width is radius for circles
 				X: Math.floor(w / scale),
 				Y: Math.floor(h / scale),
 			},

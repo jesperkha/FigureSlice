@@ -1,14 +1,16 @@
 async function submitImage() {
-	if (ImageBlob) {
-		const formData = new FormData();
-		formData.append("Shapes", JSON.stringify(getAllShapeData()));
-		formData.append("Trim", getE("trim").value);
-		formData.append("Image", ImageBlob);
+	if (!ImageBlob) {
+		return;
+	}
+	
+	const formData = new FormData();
+	formData.append("Shapes", JSON.stringify(getAllShapeData()));
+	formData.append("Trim", getE("trim").value);
+	formData.append("Image", ImageBlob);
 
-		const status = await getNewImage(formData);
-		if (status !== 200) {
-			window.location = "/error/" + status;
-		}
+	const status = await getNewImage(formData);
+	if (status !== 200) {
+		window.location = "/error/" + status;
 	}
 }
 
